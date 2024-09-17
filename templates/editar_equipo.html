@@ -1,0 +1,35 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h4 class="text-success mb-3">Editar Equipo</h4>
+    {% if error %}
+    <div class="alert alert-danger">
+        {{ error }}
+    </div>
+    {% endif %}
+    <form method="POST">
+        <div class="mb-3">
+            <label for="marca_id" class="form-label">Marca</label>
+            <select name="marca_id" id="marca_id" class="form-select" required>
+                {% for marca in marcas %}
+                <option value="{{ marca.id }}" {% if marca.id == equipo.marca_id %}selected{% endif %}>{{ marca.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="modelo_id" class="form-label">Modelo</label>
+            <select name="modelo_id" id="modelo_id" class="form-select" required>
+                {% for modelo in modelos %}
+                <option value="{{ modelo.id }}" {% if modelo.id == equipo.modelo_id %}selected{% endif %}>{{ modelo.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="costo" class="form-label">Costo</label>
+            <input type="number" step="0.01" name="costo" id="costo" class="form-control" value="{{ equipo.costo }}" required>
+        </div>
+        <button type="submit" class="btn btn-success">Actualizar Equipo</button>
+    </form>
+</div>
+{% endblock %}

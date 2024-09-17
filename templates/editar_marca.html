@@ -1,0 +1,34 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-6 col-lg-4">
+            <h2 class="text-success mb-3 px-2">Editar Marca y Fabricante</h2>
+            <!-- Mostrar mensaje de error si existe -->
+            {% if error %}
+            <div class="alert alert-danger">
+                {{ error }}
+            </div>
+            {% endif %}
+            <form method="POST">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control w-100 w-md-75" id="nombre" name="nombre" placeholder="Nombre de la Marca" value="{{ marca.nombre }}" required>
+                    <label for="nombre">Nombre de la Marca:</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <select class="form-select w-100 w-md-75" id="fabricante_id" name="fabricante_id" required>
+                        <option value="" disabled selected>Selecciona un fabricante</option>
+                        {% for fabricante in fabricantes %}
+                            <option value="{{ fabricante.id }}">{{ fabricante.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="fabricante_id">Fabricante:</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Añadir Marca</button>
+            </form>
+
+        </div>
+    </div>  
+</div>
+{% endblock %}

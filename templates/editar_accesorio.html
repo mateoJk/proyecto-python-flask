@@ -1,0 +1,43 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-6 col-lg-4">
+            <h2 class="text-success mb-3 px-2">Editar Accesorio</h2>
+
+            <!-- Mostrar mensaje de error si existe -->
+            {% if error %}
+            <div class="alert alert-danger">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <form method="POST">
+                <div class="form-floating mb-2">
+                    <select class="form-select w-100 w-md-75" id="tipo" name="tipo" required>
+                        <option value="funda" {% if accesorio.tipo == 'funda' %}selected{% endif %}>Funda</option>
+                        <option value="cargador" {% if accesorio.tipo == 'cargador' %}selected{% endif %}>Cargador</option>
+                    </select>
+                    <label for="tipo">Tipo de Accesorio:</label>
+                </div>
+                <div class="form-floating mb-2">
+                    <input type="text" class="form-control w-100 w-md-75" id="color" name="color" value="{{ accesorio.color }}" required>
+                    <label for="color">Color:</label>
+                </div>
+                <div class="form-floating mb-2">
+                    <select class="form-select w-100 w-md-75" id="modelo_id" name="modelo_id" required>
+                        {% for modelo in modelos %}
+                        <option value="{{ modelo.id }}" {% if modelo.id == accesorio.modelo_id %}selected{% endif %}>
+                            {{ modelo.nombre }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <label for="modelo_id">Modelo:</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+        </div>
+    </div>  
+</div>
+{% endblock %}

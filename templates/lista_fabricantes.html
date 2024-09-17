@@ -1,0 +1,44 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="row align-items-start">
+        <div class="col-md-6 col-lg-4">
+            <h2 class="text-success">Nuevo Fabricante</h2>
+            <form method="POST">
+                {% if error %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+                {% endif %}
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control w-100 w-md-75" id="nombre" name="nombre" placeholder=" " required>
+                    <label for="nombre">Nombre del Fabricante:</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control w-100 w-md-75" id="pais_origen" name="pais_origen" placeholder=" " required>
+                    <label for="pais_origen">País de Origen:</label>
+                </div>
+                <button type="submit" class="btn btn-primary mb-3">Crear Fabricante</button>
+            </form>
+        </div>
+
+        <div class="col-md-6 col-lg-5 mx-auto">
+            <h4 class="text-success mb-3">Listado de fabricantes</h4>
+            <ul class="list-group shadow-sm">
+                {% for fabricante in fabricantes %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span class="fw-bold">{{ fabricante.nombre }} ({{ fabricante.pais_origen }})</span>
+                    <span>
+                        <a href="{{ url_for('editar_fabricante', id=fabricante.id) }}" class="btn btn-primary btn-sm">Editar</a>
+                        <form action="{{ url_for('eliminar_fabricante', id=fabricante.id) }}" method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

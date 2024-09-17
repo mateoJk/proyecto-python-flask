@@ -1,0 +1,73 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-6 col-lg-4">
+            <h2 class="text-success mb-3">Nuevo equipo</h2>
+            <form method="POST">
+                {% if error %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+                {% endif %}
+                <div class="form-floating mb-3">   
+                    <select name="marca_id" id="marca_id" class="form-select w-100 w-md-75" required>
+                        <option value="" disabled selected>Seleccionar Marca</option>
+                        {% for marca in marcas %}
+                        <option value="{{ marca.id }}">{{ marca.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="marca_id" class="form-label">Marca</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <select name="modelo_id" id="modelo_id" class="form-select w-100 w-md-75" required>
+                        <option value="" disabled selected>Seleccionar Modelo</option>
+                        {% for modelo in modelos %}
+                        <option value="{{ modelo.id }}">{{ modelo.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="modelo_id" class="form-label">Modelo</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="number" step="0.01" name="costo" id="costo" class="form-control w-100 w-md-75" placeholder="Costo" required>
+                    <label for="costo" class="form-label">Costo</label>
+                </div>
+                <button type="submit" class="btn btn-success mb-3">Agregar Equipo</button>
+            </form>
+        </div>
+
+
+        <div class="col-md-8">
+            <h4 class="text-success mb-3">Listado de Equipos</h4>
+            <table class="table table-striped table-hover text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Costo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for equipo in equipos %}
+                    <tr>
+                        <td>{{ equipo.marca.nombre }}</td>
+                        <td>{{ equipo.modelo.nombre }}</td>
+                        <td>{{ equipo.costo }}</td>
+                        <td>
+                            <a href="{{ url_for('editar_equipo', id=equipo.id) }}" class="btn btn-primary btn-sm">Editar</a>
+                            <form action="{{ url_for('eliminar_equipo', id=equipo.id) }}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
